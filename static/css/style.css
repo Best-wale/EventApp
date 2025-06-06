@@ -1,0 +1,137 @@
+.slide-in {
+                animation: slideIn 0.3s ease-out forwards;
+            }
+
+            @keyframes slideIn {
+                from {
+                    transform: translateY(20px);
+                    opacity: 0;
+                }
+
+                to {
+                    transform: translateY(0);
+                    opacity: 1;
+                }
+            }
+
+            .fade-in {
+                animation: fadeIn 0.3s ease-out forwards;
+            }
+
+            @keyframes fadeIn {
+                from {
+                    opacity: 0;
+                }
+
+                to {
+                    opacity: 1;
+                }
+            }
+
+            /* Dark mode styles */
+            .dark {
+                color-scheme: dark;
+            }
+
+            .dark body {
+                background-color: #181818;
+                color: #e0e0e0;
+            }
+
+            /* Custom scrollbar */
+            ::-webkit-scrollbar {
+                width: 8px;
+                height: 8px;
+            }
+
+            ::-webkit-scrollbar-track {
+                background: #f1f1f1;
+            }
+
+            .dark ::-webkit-scrollbar-track {
+                background: #2d2d2d;
+            }
+
+            ::-webkit-scrollbar-thumb {
+                background: #888;
+                border-radius: 4px;
+            }
+
+            ::-webkit-scrollbar-thumb:hover {
+                background: #555;
+            }
+
+            .dark ::-webkit-scrollbar-thumb {
+                background: #555;
+            }
+
+            .dark ::-webkit-scrollbar-thumb:hover {
+                background: #777;
+            }
+
+            /* Category pill styles */
+            .category-pill {
+                transition: all 0.2s ease;
+            }
+
+            .category-pill:hover {
+                transform: translateY(-2px);
+            }
+
+            /* Ticket type selection */
+            .ticket-type-card {
+                transition: all 0.2s ease;
+                cursor: pointer;
+            }
+
+            .ticket-type-card:hover {
+                transform: translateY(-2px);
+            }
+
+            .ticket-type-card.selected {
+                border-color: #5D5CDE;
+                background-color: rgba(93, 92, 222, 0.05);
+            }
+
+            .dark .ticket-type-card.selected {
+                background-color: rgba(93, 92, 222, 0.15);
+            }
+
+            /* Tooltip styles */
+            .tooltip {
+                position: relative;
+            }
+
+            .tooltip .tooltip-text {
+                visibility: hidden;
+                width: 120px;
+                background-color: #333;
+                color: #fff;
+                text-align: center;
+                border-radius: 6px;
+                padding: 5px;
+                position: absolute;
+                z-index: 1;
+                bottom: 125%;
+                left: 50%;
+                margin-left: -60px;
+                opacity: 0;
+                transition: opacity 0.3s;
+                font-size: 0.75rem;
+            }
+
+            .tooltip .tooltip-text::after {
+                content: "";
+                position: absolute;
+                top: 100%;
+                left: 50%;
+                margin-left: -5px;
+                border-width: 5px;
+                border-style: solid;
+                border-color: #333 transparent transparent transparent;
+            }
+
+            .tooltip:hover .tooltip-text {
+                visibility: visible;
+                opacity: 1;
+            }

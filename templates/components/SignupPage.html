@@ -1,0 +1,84 @@
+{% extends 'Nav.html'%}
+        {% block content%}
+        <section id="auth-page" class="max-w-md mx-auto ">
+<div id="signup-section" class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 ">
+                    <h2 class="text-2xl font-bold mb-6 text-center">Create an Account</h2>
+                    <form id="signup-form" method="post">
+                        {% csrf_token %}
+
+signup-username
+<!--
+{% for message in messages %}
+  <p>{{ message }}</p>
+{% endfor %}
+-->
+                        <div class="mb-4">
+                            <label for="signup-username1"
+                                class="block text-gray-700 dark:text-gray-300 mb-2">First Name</label>
+                            <input type="text" id="signup-username1" name="first_name"
+                                class="w-full text-base px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary dark:bg-gray-700 dark:text-white"
+                                placeholder="First name" required>
+                        </div>
+
+
+
+
+
+                        <div class="mb-4">
+                            <label for="signup-username2"
+                                class="block text-gray-700 dark:text-gray-300 mb-2">Last Name</label>
+                            <input type="text" id="signup-username2" name="last_name"
+                                class="w-full text-base px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary dark:bg-gray-700 dark:text-white"
+                                placeholder="Last Name" required>
+                        </div>
+
+
+<div class="mb-4">
+                                <label for="event-category"
+                                    class="block text-gray-700 dark:text-gray-300 mb-2">Country</label>
+                                <select id="event-category" name="category"
+                                    class="w-full text-base px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary dark:bg-gray-700 dark:text-white"
+                                    required>
+                                    <option value="conference">Nigeria</option>
+                                    
+                                    
+                                </select>
+                            </div>
+                       
+
+
+
+                        <div class="mb-4">
+                            <label for="signup-email" class="block text-gray-700 dark:text-gray-300 mb-2">Email</label>
+                            <input type="email" id="signup-email" name="email"
+                                class="w-full text-base px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary dark:bg-gray-700 dark:text-white"
+                                placeholder="email@example.com" autocomplete="username" required>
+                        </div>
+                        <div class="mb-4">
+                            <label for="signup-password"
+                                class="block text-gray-700 dark:text-gray-300 mb-2">Password</label>
+                            <input type="password" id="signup-password" name="password"
+                                class="w-full text-base px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary dark:bg-gray-700 dark:text-white"
+                                placeholder="••••••••" autocomplete="current-password" required>
+                        </div>
+
+                        <div class="mb-4">
+                            <div class="flex items-center">
+                                <input type="checkbox" id="signup-organizer"
+                                    class="h-4 w-4 text-primary border-gray-300 rounded focus:ring-primary">
+                                <label for="signup-organizer" class="ml-2 block text-gray-700 dark:text-gray-300">
+                                    Register as an event organizer
+                                </label>
+                            </div>
+                        </div>
+                        <button type="submit"
+                            class="w-full bg-primary hover:bg-primary-dark text-white font-medium py-2 px-4 rounded-lg transition duration-300">Sign
+                            Up</button>
+                    </form>
+                    <p class="mt-4 text-center text-gray-600 dark:text-gray-400">
+                        Already have an account? <a href="#" id="switch-to-login"
+                            class="text-primary hover:underline">Log in</a>
+                    </p>
+                </div>
+</section>
+{% endblock%}

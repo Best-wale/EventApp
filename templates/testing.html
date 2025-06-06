@@ -1,0 +1,635 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multi-Event Ticket System</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+.container {
+    background: #ffffff;
+    border-radius: 10px;
+    padding: 15px;
+    margin: 15px auto;
+    width: 90%;
+    max-width: 400px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-in-out;
+    display: flex;
+
+}
+
+.container:hover {
+    transform: scale(1.02);
+}
+
+.class-card {
+    padding: 20px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #3498db, #2ecc71);
+    color: #fff;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.class-card h2 {
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.class-details {
+    font-size: 16px;
+    padding-top: 10px;
+    opacity: 0.9;
+}
+
+
+    </style>
+</head>
+<body class="bg-gray-100 p-6">
+
+    <h1>📍 Location Tracker & Class Data</h1>
+
+    <!-- Location Display -->
+    <div id="location-container">
+        <p id="lat">Latitude: Loading...</p>
+        <p id="long">Longitude: Loading...</p>
+        <p id="error" class="error"></p>
+    </div>
+
+    <!-- Movie Data Display -->
+    <div id="container" class="container"></div>
+
+    
+
+    <script>
+        
+        document.addEventListener("DOMContentLoaded", () => {
+    fetchMovies();
+    getLocation();
+});
+
+function getLocation() {
+    navigator.geolocation.getCurrentPosition(
+        (position) => {
+            const latElement = document.getElementById("lat");
+            const longElement = document.getElementById("long");
+
+            latElement.innerHTML = `Latitude: ${position.coords.latitude}`;
+            longElement.innerHTML = `Longitude: ${position.coords.longitude}`;
+
+            const distanceKm = getDistanceFromLatLon(position.coords.latitude, position.coords.longitude, 6.458713, 3.202095);
+            console.log(`Distance: ${distanceKm.toFixed(3)} meters`);
+
+            if (distanceKm <= 50) {
+                console.log("You're in the right location ✅");
+            } else {
+                console.warn("You're too far! 🚨 Move closer.");
+            }
+        },
+        (error) => {
+            console.error("Error getting location:", error.message);
+            document.getElementById("error").innerHTML = `❌ Location Error: ${error.message}`;
+        }
+    );
+}
+
+function deg2rad(deg) {
+    return deg * (Math.PI / 180);
+}
+
+function getDistanceFromLatLon(lat1, lon1, lat2, lon2) {
+    const R = 6371; // Earth's radius in km
+    const dLat = deg2rad(lat2 - lat1);
+    const dLon = deg2rad(lon2 - lon1);
+
+    const a = Math.sin(dLat / 2) ** 2 + Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * Math.sin(dLon / 2) ** 2;
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    return R * c * 1000; // Convert to meters
+}
+
+async function fetchMovies() {
+    try {
+        const response = await fetch("http://127.0.0.1:8000/class/api/");
+        const data = await response.json();
+        displayMovies(data);
+        data.forEach(movie => {
+        const distanceKm = getDistanceFromLatLon(position.coords.latitude, position.coords.longitude, ${movie.lat}, ${movie.lon});
+            console.log(`Distance: ${distanceKm.toFixed(3)} meters`);
+        });
+    } catch (error) {
+        console.error("Error fetching data:", error);
+    }
+}
+
+function displayMovies(data) {
+    const container = document.getElementById("container");
+    container.innerHTML = ""; // Clear previous entries
+
+    data.forEach(movie => {
+        const movieCard = document.createElement("div");
+        movieCard.className = "class-card";
+        movieCard.innerHTML = `
+            <h2>${movie.class_name}</h2>
+            <div class="class-details">📍 Longitude: ${movie.lon}</div>
+            <div class="class-details">📍 Latitude: ${movie.lat}</div>
+
+        `;
+        container.appendChild(movieCard);
+    });
+}
+
+
+    </script>
+</body>
+</html>
+
+
+
+
+<!--DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multi-Event Ticket System</title>
+    <!--script src="https://cdn.tailwindcss.com"></script--
+    <style type="text/css">
+        .container{
+            border: 1px solid black;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 p-6">
+
+    <h1>TEst the go loaction</h1>
+    <div id="container" class="container">
+      
+        
+    </div>
+    <div id="long"> </div>
+    <div id="lat"> </div>
+    <div id="error"></div>
+
+
+
+
+
+
+<script type="text/javascript">
+navigator.geolocation.getCurrentPosition(
+    (position) => {
+        const long = document.getElementById("long");
+const lat = document.getElementById("lat");
+
+        lat.innerHTML =`Latitude:, ${position.coords.latitude}`;
+        long.innerHTML =`Longitude:, ${position.coords.longitude}`;
+const lan1 = position.coords.latitude
+const long1 = position.coords.longitude
+const distanceKm = getDistanceFromLatLon(lan1, long1, 6.458713, 3.202095);
+console.log(`Distance: ${distanceKm.toFixed(3)} m`);
+
+        
+        if (distanceKm === 0 || distanceKm <= 50){
+            console.log('this is ok man')
+            
+        }else{
+            console.log('get your arse in class dump fuck')
+        }
+    },
+    (error) => {
+        console.error("Error getting location:", error.message);
+        const error1 = document.getElementById("error");
+        error1.innerHTML = `Error getting location:", ${error.message}`
+
+    }
+);
+
+
+
+function deg2rad(deg) {
+  return deg * (Math.PI / 180);
+}
+
+
+
+
+
+function getDistanceFromLatLon(lat1, lon1, lat2, lon2) {
+  const R = 6371; // Radius of the Earth in kilometers
+  const dLat = deg2rad(lat2 - lat1);
+  const dLon = deg2rad(lon2 - lon1);
+  const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+    Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) *
+    Math.sin(dLon / 2) * Math.sin(dLon / 2);
+    
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  const d = R * c; // Distance in km
+  return d;
+}
+
+
+
+
+
+
+// Example usage:
+const distanceKm = getDistanceFromLatLon(40.7484, -73.9857, 40.7480, -73.9845);
+console.log(`Distance: ${distanceKm.toFixed(3)*1000} m`);
+
+
+
+
+
+
+
+
+
+function getData(getdata){
+  console.log(getdata);
+const con = document.getElementById('container');
+
+  getdata.forEach(data => {
+
+
+    items = ` 
+        <h2>${data.class_name}</h2>
+
+     <div>${data.lon}</div>
+    <div>${data.lat}</div>`;
+
+  console.log(items)
+  });
+con.innerHTML = items;
+  
+}
+
+function fetchData(){
+
+fetch('http://127.0.0.1:8000/class/api/')
+    .then(response => response.json()).
+        then(data => getData(data))
+            .catch(error => console.error('Error',error))
+
+
+}
+
+
+fetchData();
+
+    
+    if ("geolocation" in navigator) {
+    console.log("Geolocation is available!");
+    console.log(navigator);
+} else {
+    console.log("Geolocation is NOT available.");
+}
+
+
+
+
+
+
+
+
+
+
+
+/*
+const watchID = navigator.geolocation.watchPosition(
+    (position) => {
+        console.log("Updated Latitude:", position.coords.latitude);
+        console.log("Updated Longitude:", position.coords.longitude);
+    }
+);
+*/
+
+function showPosition(position) {
+    let latlon = position.coords.latitude + "," + position.coords.longitude;
+    let img_url = `https://maps.googleapis.com/maps/api/staticmap?center=${latlon}&zoom=14&size=400x300&sensor=false&key=YOUR_API_KEY`;
+    document.getElementById("mapholder").innerHTML = `<img src='${img_url}'>`;
+}
+
+
+
+
+// Stop tracking when needed
+//navigator.geolocation.clearWatch(watchID);
+
+
+</script>
+</body>
+</html>
+
+<!--DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multi-Event Ticket System</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 p-6">
+
+    <div class="max-w-lg mx-auto bg-white p-6 shadow-lg rounded-lg">
+        {% if user.is_authenticated %}
+    <p>Hello, {{ user.id }}!</p>
+{% else %}
+    <p>Welcome, Guest!</p>
+{% endif %}
+        <h2 class="text-xl font-bold text-center">Select Your Events</h2>
+
+        <div id="events-container">
+            <!-- Dynamic event rows will be added here -
+        </div>
+
+        <button onclick="addEventRow()" class="mt-4 bg-blue-500 text-white px-4 py-2 rounded">+ Add Event</button>
+
+        <div class="mt-6 text-right">
+            <h3 class="text-lg font-semibold">Total Amount: <span id="totalAmount">$0.00</span></h3>
+        </div>
+    </div>
+
+    <script>
+        let events = [];
+        const eventData = [
+            { id: 1, name: "Conference", price: 50 },
+            { id: 2, name: "Concert", price: 100 },
+            { id: 3, name: "Workshop", price: 30 },
+            { id: 4, name: "Sports", price: 75 },
+        ];
+
+        function addEventRow() {
+            const eventContainer = document.getElementById("events-container");
+
+            let index = events.length;
+            events.push({ eventId: eventData[0].id, quantity: 1 });
+
+            const row = document.createElement("div");
+            row.classList.add("flex", "justify-between", "items-center", "border-b", "py-2");
+
+            row.innerHTML = `
+                <select class="border px-2 py-1 rounded" onchange="updateEvent(${index}, this)">
+                    ${eventData.map(event => `<option value="${event.id}">${event.name} ($${event.price})</option>`).join("")}
+                </select>
+
+                <div class="flex items-center">
+                    <button onclick="updateQuantity(${index}, -1)" class="bg-red-500 text-white px-2 py-1 rounded">-</button>
+                    <span class="px-4" id="quantity-${index}">1</span>
+                    <button onclick="updateQuantity(${index}, 1)" class="bg-green-500 text-white px-2 py-1 rounded">+</button>
+                </div>
+
+                <button onclick="removeEvent(${index})" class="bg-gray-500 text-white px-2 py-1 rounded">Remove</button>
+            `;
+
+            eventContainer.appendChild(row);
+            updateTotal();
+        }
+
+        function updateEvent(index, select) {
+            events[index].eventId = parseInt(select.value);
+            updateTotal();
+        }
+
+        function updateQuantity(index, change) {
+            if (events[index].quantity + change > 0) {
+                events[index].quantity += change;
+                document.getElementById(`quantity-${index}`).innerText = events[index].quantity;
+                updateTotal();
+            }
+        }
+
+        function removeEvent(index) {
+            events.splice(index, 1);
+            document.getElementById("events-container").innerHTML = "";
+            events.forEach((event, i) => addEventRow(i));
+            updateTotal();
+        }
+
+        function updateTotal() {
+            let total = events.reduce((sum, event) => {
+                let eventDataItem = eventData.find(e => e.id === event.eventId);
+                return sum + event.quantity * (eventDataItem ? eventDataItem.price : 0);
+            }, 0);
+            
+            document.getElementById("totalAmount").innerText = `$${total.toFixed(2)}`;
+        }
+    </script>
+</body>
+</html>
+
+
+
+<!--DOCTYPE html>
+<html>
+
+    <head>
+        <title>CSRF Example</title>
+    </head>
+
+    <body>
+
+        <form id="csrf-form">
+            {% csrf_token %} 
+        </form>
+
+        <button id="myButton">Make API Request</button>
+
+        <script>
+            function getCookie(name) {
+                let cookieValue = null;
+                if (document.cookie && document.cookie !== '') {
+                    const cookies = document.cookie.split(';');
+                    for (let i = 0; i < cookies.length; i++) {
+                        let cookie = cookies[i].trim();
+                        if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                            break;
+                        }
+                    }
+                }
+                return cookieValue;
+            }
+
+            document.getElementById('myButton').addEventListener('click', function () {
+                const csrftoken = getCookie('csrftoken');
+const ticketCode = `RT-13-9-${Math.floor(Math.random() * 10000)}`;
+
+                const data ={
+ 
+   name: "BEst",
+    email: "BEst@gmail.com",
+    ticket_code: ticketCode,
+    payment_status: 'paid',
+    checked_in: false,
+    event: 13,
+    ticket_type: 9
+}
+
+                const apiUrl = 'http://127.0.0.1:8000/RoyalTix/api/registerevent/';
+
+                const fetchOptions = {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': csrftoken
+                    },
+                    body: JSON.stringify(data)
+                };
+
+                fetch(apiUrl, fetchOptions)
+                    .then(response => {
+                        if (!response.ok) {
+                            console.error('HTTP error! Status:', response.status);
+                            return response.json().then(errorData => {
+                                console.error('Error data:', errorData);
+                                throw new Error('Request failed with status ' + response.status + ' and details: ' + JSON.stringify(errorData));
+                            });
+                        }
+                        return response.json();
+                    })
+                    .then(responseData => {
+                        console.log('Success:', responseData);
+                        alert('Parent and children created successfully!');
+                    })
+                    .catch(error => {
+                        console.error('Fetch error:', error);
+                        alert('An error occurred: ' + error.message);
+                    });
+            });
+        </script>
+    </body>
+
+</html>
+
+<!--DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signup</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <form id="signupForm">
+        {% csrf_token %} 
+        <button type="submit">Sign in</button>
+    </form>
+
+    <div id="response"></div>
+<script>
+  function getCookie(name) {
+                let cookieValue = null;
+                if (document.cookie && document.cookie !== '') {
+                    const cookies = document.cookie.split(';');
+                    for (let i = 0; i < cookies.length; i++) {
+                        let cookie = cookies[i].trim();
+                        if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                            break;
+                        }
+                    }
+                }
+                return cookieValue;
+            }
+
+        $(document).ready(function() {
+    $('#signupForm').on('submit', function(event) {
+        event.preventDefault(); // Prevent the default form submission
+         const csrftoken = getCookie('csrftoken');
+const ticketCode = `RT-13-9-${Math.floor(Math.random() * 10000)}`;
+
+console.log(ticketCode)
+        // Gather form data
+        const getData = {
+    name: "BEst",
+    email: "BEst@gmail.com",
+    ticket_code: ticketCode,
+    payment_status: 'Paid',
+    checked_in: false,
+    event: 13,
+    ticket_type: 9
+}
+
+        // AJAX request
+        $.ajax({
+            url: 'http://127.0.0.1:8000/RoyalTix/api/registerevent/', // Replace with your API endpoint
+            method: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(getData ),
+            success: function(response) {
+                
+                $('#response').html('<p>Signup successful!</p>');
+               
+                
+            },
+            error: function(xhr, status, error) {
+                $('#response').html('<p>Error: ' + xhr.responseText + '</p>');
+                console.error('Signup failed:', error); // Handle error response
+            }
+        });
+    });
+});
+
+
+    </script>
+
+</body>
+</html-->
+
+
+
+
+<!--DOCTYPE html>
+<html>
+<head>
+  <title>Auto Click Example</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+  <button id="myButton">Click Me!</button>
+
+  <script>
+
+
+const ticketCode = `RT-13-9-${Math.floor(Math.random() * 10000)}`;
+
+const getData = {
+    name: "BEst",
+    email: "BEst@gmail.com",
+    ticket_code: ticketCode,
+    payment_status: 'Paid',
+    checked_in: false,
+    event: 13,
+    ticket_type: 9
+}
+async function postData() {
+  try {
+        const response = await fetch(`http://127.0.0.1:8000/RoyalTix/api/registerevent/`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(getData),
+        });
+
+        if (!response.ok) {
+            throw new Error('Sign up failed');
+        }
+
+        const data = await response.json();
+       
+        console.log('Signup successful:', data);
+    } catch (error) {
+        console.error('Error:', error);
+    }
+}
+            
+            // Fetch the data
+            postData();
+        
+  </script>
+</body>
+</html>

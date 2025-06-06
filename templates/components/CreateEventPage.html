@@ -1,0 +1,96 @@
+
+{% extends 'Nav.html'%}
+ {% block content%}
+
+
+
+
+ 
+
+
+
+<div class="max-w-4xl mx-auto p-6 bg-white dark:bg-gray-800 shadow-lg rounded-lg">
+  <h2 class="text-2xl font-bold mb-4">Create New Event</h2>
+
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.media }}
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+      {{ form.title.label_tag }} {{ form.title }}
+      {{ form.category.label_tag }} {{ form.category }}
+    </div>
+
+    <div class="mb-4">
+      {{ form.description.label_tag }} {{ form.description }}
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+      {{ form.date.label_tag }} {{ form.date }}
+      {{ form.time.label_tag }} {{ form.time }}
+      {{ form.location.label_tag }} {{ form.location }}
+    </div>
+
+    <div class="mb-4">
+      {{ form.image.label_tag }} {{ form.image }}
+    </div>
+
+    <div class="mb-4 hidden">
+      {{ form.organizer }}
+      {{ form.organizer_id }}
+      {{ form.status }}
+      
+    </div>
+
+    <div class="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg mb-6">
+      <h4 class="font-semibold mb-4">Ticket Types</h4>
+      {{ formset.management_form }}
+      <div id="ticket-types-form">
+        {% for form in formset %}
+          <div class="ticket-type-form border border-gray-200 dark:border-gray-600 rounded-lg p-4 mb-4">
+            {{ form.as_p }}
+          </div>
+        {% endfor %}
+      </div>
+      <div id="empty-form" class="hidden">
+        <div class="ticket-type-form border border-gray-200 dark:border-gray-600 rounded-lg p-4 mb-4">
+          {{ formset.empty_form.as_p|safe }}
+        </div>
+      </div>
+      <button type="button" id="add-ticket-type" class="mt-2 text-primary hover:text-primary-dark flex items-center">
+        <i class="fas fa-plus-circle mr-2"></i> Add Another Ticket Type
+      </button>
+    </div>
+
+<div class="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg mb-6">
+      <h4 class="font-semibold mb-4">Ticket Types</h4>
+      {{ formset.management_form }}
+      <div id="ticket-types-form">
+        {% for form in formset %}
+          <div class="ticket-type-form border border-gray-200 dark:border-gray-600 rounded-lg p-4 mb-4">
+            {{ form.as_p }}
+          </div>
+        {% endfor %}
+      </div>
+      <div id="empty-form" class="hidden">
+        <div class="ticket-type-form border border-gray-200 dark:border-gray-600 rounded-lg p-4 mb-4">
+          {{ formset.empty_form.as_p|safe }}
+        </div>
+      </div>
+      <button type="button" id="add-ticket-type" class="mt-2 text-primary hover:text-primary-dark flex items-center">
+        <i class="fas fa-plus-circle mr-2"></i> Add Another Ticket Type
+      </button>
+    </div>
+    <div class="flex justify-end">
+      <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg">
+        Create Event
+      </button>
+    </div>
+  </form>
+</div>
+
+
+
+
+
+ 
+{% endblock%}

@@ -1,0 +1,22 @@
+{% extends 'Nav.html'%}
+ {% block content%}
+{% for ticket in event.tickettype_set.all %}
+  <div class="ticket bg-gray-100 p-4 mb-3 rounded-lg">
+    <h4>{{ ticket.name }} - ${{ ticket.price }}</h4>
+    <p>{{ ticket.description }}</p>
+    <p>Available: {{ ticket.capacity|add:-ticket.sold }}</p>
+    
+    {% if user.is_authenticated %}
+      <form method="post" action="{% url 'purchase_ticket' ticket.id %}">
+        {% csrf_token %}
+        <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">
+          Buy Ticket
+        </button>
+      </form>
+    {% else %}
+      <p class="text-sm text-gray-600">Login to purchase.</p>
+    {% endif %}
+  </div>
+{% endfor %}
+
+{% endblock %}
