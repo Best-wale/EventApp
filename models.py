@@ -1,6 +1,7 @@
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 from django.db import models
-from django.utils.translation import gettext_lazy as _ 
+
+from cloudinary.models import CloudinaryField
 from django.contrib.auth.models import User
 from django.conf import settings
  
@@ -11,7 +12,7 @@ from django.conf import settings
 class CustomUserManager(BaseUserManager):
     def create_user(self, email, password=None, **extra_fields):
         if not email:
-            raise ValueError(_("The Email field is required"))
+            raise ValueError("The Email field is required")
         email = self.normalize_email(email)
         user = self.model(email=email, **extra_fields)
         user.set_password(password)
@@ -70,6 +71,7 @@ class Event(models.Model):
     date = models.DateField()            # Example: 2026-11-15
     time = models.TimeField()            # Example: 09:00
     location = models.CharField(max_length=255)
+    #image = CloudinaryField('Image', blank=True,null=True, resource_type='auto')
     
     image = models.ImageField(
         upload_to='event_images/',

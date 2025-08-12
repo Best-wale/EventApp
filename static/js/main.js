@@ -342,7 +342,6 @@ const adminStatsBtn = document.getElementById("admin-stats-btn");
 const adminUsers = document.getElementById("admin-users");
 const adminAllEvents = document.getElementById("admin-all-events");
 const adminStatistics = document.getElementById("admin-statistics");
-
 // Toast
 const toast = document.getElementById("toast");
 const toastTitle = document.getElementById("toast-title");
@@ -363,9 +362,15 @@ const modalSignup = document.getElementById("signup-section");
 
 //
 console.log(user);
-const real_user= user.innerHTML
-const initials = real_user.substring(0, 2).toUpperCase();
-userInitials.textContent = initials;
+if (user && user.innerHTML) { // Check if user is not null and has innerHTML
+    const real_user = user.innerHTML;
+    const initials = real_user.substring(0, 2).toUpperCase();
+    userInitials.textContent = initials;
+} else {
+    const real_user = ''; // Handle the case where user or innerHTML is null/empty
+    const initials = real_user.substring(0, 2).toUpperCase();
+    userInitials.textContent = initials;
+}
 function generateEventImage(eventName, category) {
     const canvas = document.createElement("canvas");
     canvas.width = 600;
@@ -1353,7 +1358,7 @@ function registerForEvent(event, ticketType, formData) {
         event: event.id,
         ticket_type: ticketType.id,
     };
-    const apiUrl = "http://127.0.0.1:8000/RoyalTix/api/registerevent/";
+    const apiUrl = "/RoyalTix/api/registerevent/";
 
     const fetchOptions = {
         method: "POST",
